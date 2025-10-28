@@ -18,6 +18,12 @@ import ford from "../assets/images/ford-logo.svg";
 import ferari from "../assets/images/ferrari-logo.svg";
 import lambo from "../assets/images/lambor-logo.svg";
 import AuctionCardImage from "../props/AuctionProps";
+import auctionImg1 from "../assets/images/auction-img1.jpg";
+import auctionImg2 from "../assets/images/auction-img2.jpg";
+import auctionImg3 from "../assets/images/auction-img3.jpg";
+import auctionImg4 from "../assets/images/auction-img4.jpg";
+import auctionImg5 from "../assets/images/auction-img5.jpg";
+import auctionImg8 from "../assets/images/auction-img8.jpg";
 
 const bannerImages = [bannerImg1, bannerImg2, bannerImg3];
 
@@ -45,18 +51,12 @@ const carBrands = [
 ];
 
 const auctionImages = [
-  { img: mercedes },
-  { img: hyundai },
-  { img: honda },
-  { img: toyota },
-  { img: rangerover },
-  { img: tesla },
-  { img: nissan },
-  { img: bmw },
-  { img: chevrolet },
-  { img: ford },
-  { img: ferari },
-  { img: lambo },
+  { img: auctionImg1 },
+  { img: auctionImg2 },
+  { img: auctionImg3 },
+  { img: auctionImg4 },
+  { img: auctionImg5 },
+  { img: auctionImg8 },
 ];
 
 function Home() {
@@ -217,7 +217,8 @@ function Home() {
           </a>
         </div>
       </div>
-      <div className="max-w-[1140px] mx-auto px-4">
+
+      <div className="max-w-[1140px] mx-auto px-4 h-[600px] mb-[80px]">
         <div className="flex items-center justify-between mb-[40px]">
           <div className="flex gap-[10px]">
             <h2 className="text-black font-bold text-[40px] md:text-[45px] leading-[1.2] mb-2 font-sans">
@@ -234,8 +235,8 @@ function Home() {
               onClick={() =>
                 setCurrent((prev) =>
                   prev === 0
-                    ? carBrands.length - visibleBrands
-                    : prev - visibleBrands
+                    ? Math.max(0, auctionImages.length - 4)
+                    : Math.max(0, prev - 4)
                 )
               }
             >
@@ -246,9 +247,7 @@ function Home() {
               aria-label="Next"
               onClick={() =>
                 setCurrent((prev) =>
-                  prev + visibleBrands >= carBrands.length
-                    ? 0
-                    : prev + visibleBrands
+                  prev + 4 >= auctionImages.length ? 0 : prev + 4
                 )
               }
             >
@@ -256,10 +255,19 @@ function Home() {
             </button>
           </div>
         </div>
-        <div className="max-w-4xl mx-auto px-4 mt-8">
-          {auctionImages.map((item, index) => (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6" key={index}>
-              <div className="md:col-span-1">
+        <div className="w-full overflow-hidden">
+          <div
+            className="flex gap-4"
+            style={{
+              transform: `translateX(-${current * 266}px)`,
+              transition: "transform 0.7s cubic-bezier(0.4,0,0.2,1)",
+            }}
+          >
+            {auctionImages.map((item, index) => (
+              <div
+                key={index}
+                className="min-w-[250px] p-2 transition-transform duration-300 hover:scale-105"
+              >
                 <AuctionCardImage
                   imageUrl={item.img}
                   isLive={true}
@@ -270,8 +278,83 @@ function Home() {
                   onViewClick={() => console.log("view clicked")}
                 />
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+        <div className="w-full flex justify-center mt-8">
+          <a
+            href="#"
+            className="relative inline-flex items-center px-0 py-0 text-[#01AA85] font-semibold text-lg group transition duration-300"
+            style={{
+              background: "none",
+              boxShadow: "none",
+              letterSpacing: "0.02em",
+            }}
+          >
+            View All Category
+            <span className="ml-2 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+              <svg width="20" height="20" fill="none" viewBox="0 0 20 20">
+                <path
+                  d="M7 5l5 5-5 5"
+                  stroke="#01AA85"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div
+        className="w-full relative h-[80vh] md:h-[100vh] flex items-center justify-start bg-cover bg-center transition-all duration-1000"
+        style={{
+          backgroundImage: `url(${bannerImages[current]})`,
+        }}
+      >
+        <div className="absolute inset-0 bg-black/40 z-10" />
+        <div className="relative z-20 flex flex-col items-start space-y-6 text-white px-8 md:px-16 max-w-lg ml-8 md:ml-16 bg-black/30 backdrop-blur-sm rounded-lg p-8">
+          <div>
+        <span className="text-lg">Current Bid at:</span>
+        <h3 className="text-4xl font-bold">$2,898</h3>
+          </div>
+
+          <h2 className="text-3xl md:text-5xl font-bold">
+        Velocity vision where performance meets.
+          </h2>
+
+          <div className="flex flex-col items-start space-y-2">
+        <span className="text-lg">Auction Will End:</span>
+        <div className="flex items-center gap-2">
+          <div className="px-4 py-2 rounded-lg text-center">
+          <span className="text-2xl font-bold">00</span>
+          <p className="text-sm">Days</p>
+          </div>
+          <span className="text-2xl">:</span>
+          <div className="px-4 py-2 rounded-lg text-center">
+          <span className="text-2xl font-bold">00</span>
+          <p className="text-sm">Hours</p>
+          </div>
+          <span className="text-2xl">:</span>
+          <div className="px-4 py-2 rounded-lg text-center">
+          <span className="text-2xl font-bold">00</span>
+          <p className="text-sm">Minutes</p>
+          </div>
+          <span className="text-2xl">:</span>
+          <div className="px-4 py-2 rounded-lg text-center">
+          <span className="text-2xl font-bold">00</span>
+          <p className="text-sm">Seconds</p>
+          </div>
+        </div>
+          </div>
+
+          <a
+        href="/auction-details"
+        className="bg-[#01AA85] hover:bg-[#018e6f] px-8 py-3 rounded-full font-semibold transition-colors duration-300"
+          >
+        Bid Now
+          </a>
         </div>
       </div>
     </div>
